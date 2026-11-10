@@ -5,14 +5,14 @@ public class Cliente {
     private String nome;
     private String celular;
     private String endereco;
-    private String email;
+    private Usuario usuario;
 
-    public Cliente(String cpf, String nome, String celular, String endereco, String email) {
+    public Cliente(String cpf, String nome, String celular, String endereco, String email,Usuario usuario) {
         this.cpf = cpf;
         this.nome = nome;
         this.celular = celular;
         this.endereco = endereco;
-        this.email = email;
+        this.usuario = usuario;
     }
 
     public String getCpf() { return cpf; }
