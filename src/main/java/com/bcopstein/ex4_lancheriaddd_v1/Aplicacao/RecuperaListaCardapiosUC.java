@@ -11,11 +11,11 @@ public class RecuperaListaCardapiosUC {
     private CardapioService cardapioService;
 
     @Autowired
-    public RecuperaListaCardapiosUC(CardapioService cardapioService){
+    public RecuperaListaCardapiosUC(CardapioService cardapioService) {
         this.cardapioService = cardapioService;
     }
 
-    public CabecalhoCardapioResponse run(){
+    public CabecalhoCardapioResponse run() {
         return new CabecalhoCardapioResponse(cardapioService.recuperaListaDeCardapios());
-    }    
+    }
 }

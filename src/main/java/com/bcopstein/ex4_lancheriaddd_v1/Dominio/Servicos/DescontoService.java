@@ -18,16 +18,16 @@ public class DescontoService {
 
     @Autowired
     public DescontoService(PoliticaDescontoRepository politicaDescontoRepository,
-                           ConfiguracaoRepository configuracaoRepository){
+            ConfiguracaoRepository configuracaoRepository) {
         this.politicaDescontoRepository = politicaDescontoRepository;
         this.configuracaoRepository = configuracaoRepository;
     }
 
-    public List<PoliticaDesconto> listaPoliticas(){
+    public List<PoliticaDesconto> listaPoliticas() {
         return politicaDescontoRepository.todas();
     }
 
-    public void definirPoliticaCorrente(String codigo){
+    public void definirPoliticaCorrente(String codigo) {
         if (!politicaDescontoRepository.existe(codigo))
             throw new IllegalArgumentException("Politica de desconto inexistente: " + codigo);
         configuracaoRepository.salva(CHAVE_POLITICA_CORRENTE, codigo);

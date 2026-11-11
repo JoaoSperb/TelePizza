@@ -15,13 +15,13 @@ public class RecuperarCardapioUC {
     private CardapioService cardapioService;
 
     @Autowired
-    public RecuperarCardapioUC(CardapioService cardapioService){
+    public RecuperarCardapioUC(CardapioService cardapioService) {
         this.cardapioService = cardapioService;
     }
 
-    public CardapioResponse run(long idCardapio){
+    public CardapioResponse run(long idCardapio) {
         Cardapio cardapio = cardapioService.recuperaCardapio(idCardapio);
         List<Produto> sugestoes = cardapioService.recuperaSugestoesDoChef();
-        return new CardapioResponse(cardapio,sugestoes);
+        return new CardapioResponse(cardapio, sugestoes);
     }
 }

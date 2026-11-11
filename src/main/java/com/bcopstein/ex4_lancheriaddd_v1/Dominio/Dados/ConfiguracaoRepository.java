@@ -4,5 +4,6 @@ import java.util.Optional;
 
 public interface ConfiguracaoRepository {
     Optional<String> recupera(String chave);
+
     void salva(String chave, String valor);
 }
