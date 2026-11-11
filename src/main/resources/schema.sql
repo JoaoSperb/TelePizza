@@ -1,9 +1,17 @@
-create table if not exists clientes(
-  cpf varchar(15) not null primary key,
-  nome varchar(100) not null,
-  celular varchar(20) not null,
-  endereco varchar(255) not null,
-  email varchar(255) not null
+create table if not exists usuarios (
+    email varchar(255) not null primary key,
+    senha varchar(255) not null,
+    perfil varchar(20) not null,
+    check (perfil in ('CLIENTE', 'ADMINISTRADOR'))
+);
+
+create table if not exists clientes (
+    cpf varchar(15) not null primary key,
+    nome varchar(100) not null,
+    celular varchar(20) not null,
+    endereco varchar(255) not null,
+    usuario_email varchar(255) not null UNIQUE,
+    foreign key (usuario_email) references usuarios(email)
 );
 
 create table if not exists ingredientes (
