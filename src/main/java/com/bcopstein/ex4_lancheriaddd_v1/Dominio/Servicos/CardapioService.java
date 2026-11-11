@@ -13,7 +13,7 @@ import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Produto;
 
 @Service
 public class CardapioService {
-    public static final String CHAVE_CARDAPIO_CORRENTE = "cardapio_corrente";
+    // public static final String CHAVE_CARDAPIO_CORRENTE = "cardapio_corrente";
 
     private CardapioRepository cardapioRepository;
     private ConfiguracaoRepository configuracaoRepository;
@@ -40,12 +40,13 @@ public class CardapioService {
     public void definirCardapioCorrente(long id) {
         if (cardapioRepository.recuperaPorId(id) == null)
             throw new IllegalArgumentException("Cardapio inexistente: " + id);
-        configuracaoRepository.salva(CHAVE_CARDAPIO_CORRENTE, String.valueOf(id));
+        cardapioRepository.definirCorrente(id);
     }
 
     public Cardapio recuperaCardapioCorrente() {
-        String valor = configuracaoRepository.recupera(CHAVE_CARDAPIO_CORRENTE)
-                .orElseThrow(() -> new IllegalStateException("Cardapio corrente nao definido"));
-        return recuperaCardapio(Long.parseLong(valor));
+        Cardapio cardapio = cardapioRepository.recuperaCorrente();
+        if (cardapio == null)
+            throw new IllegalStateException("Cardapio corrente nao definido");
+        return cardapio;
     }
 }

@@ -26,11 +26,11 @@ public class CardapioRepositoryJDBC implements CardapioRepository{
 
     @Override
     public Cardapio recuperaPorId(long id) {
-        String sql = "SELECT id, titulo FROM cardapios WHERE id = ?";
+        String sql = "SELECT id, titulo , corrente FROM cardapios WHERE id = ?";
         List<Cardapio> cardapios = this.jdbcTemplate.query(
             sql,
             ps -> ps.setLong(1, id),
-            (rs, rowNum) -> new Cardapio(new CabecalhoCardapio(rs.getLong("id"), rs.getString("titulo")), null)
+            (rs, rowNum) -> new Cardapio(new CabecalhoCardapio(rs.getLong("id"), rs.getString("titulo"), rs.getBoolean("corrente")), null)
         );
         if (cardapios.isEmpty()) {
             return null;
@@ -49,13 +49,29 @@ public class CardapioRepositoryJDBC implements CardapioRepository{
 
     @Override
     public List<CabecalhoCardapio> cardapiosDisponiveis(){
-        String sql = "SELECT id, titulo FROM cardapios";
+        String sql = "SELECT id, titulo, corrente FROM cardapios";
         List<CabecalhoCardapio> cabCardapios = this.jdbcTemplate.query(
             sql,
             ps->{},
-            (rs, rowNum) -> new CabecalhoCardapio(rs.getLong("id"), rs.getString("titulo"))
+            (rs, rowNum) -> new CabecalhoCardapio(rs.getLong("id"), rs.getString("titulo"),rs.getBoolean("corrente"))
         );
         return cabCardapios;
     }
     
+    @Override
+    public Cardapio recuperaCorrente() {
+        List<Long> ids = jdbcTemplate.query(
+            "SELECT id FROM cardapios WHERE corrente = TRUE",
+            (rs, rowNum) -> rs.getLong("id"));
+        if (ids.isEmpty()) {
+            return null;
+        }
+        return recuperaPorId(ids.getFirst());
+    }
+
+    @Override
+    public void definirCorrente(long id) {
+        jdbcTemplate.update(
+            "UPDATE cardapios SET corrente = CASE WHEN id = ? THEN TRUE ELSE FALSE END", id);
+    }
 }

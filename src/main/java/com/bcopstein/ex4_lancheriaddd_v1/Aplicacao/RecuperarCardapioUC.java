@@ -19,8 +19,8 @@ public class RecuperarCardapioUC {
         this.cardapioService = cardapioService;
     }
 
-    public CardapioResponse run(long idCardapio) {
-        Cardapio cardapio = cardapioService.recuperaCardapio(idCardapio);
+    public CardapioResponse run() {
+        Cardapio cardapio = cardapioService.recuperaCardapioCorrente();
         List<Produto> sugestoes = cardapioService.recuperaSugestoesDoChef();
         return new CardapioResponse(cardapio, sugestoes);
     }

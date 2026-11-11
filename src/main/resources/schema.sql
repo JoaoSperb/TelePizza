@@ -60,7 +60,8 @@ create table if not exists produto_receita (
 -- Tabela de Cardapios
 create table if not exists cardapios (
   id bigint primary key,
-  titulo varchar(255) not null
+  titulo varchar(255) not null,
+  corrente boolean default false
 );
 
 -- Tabela de relacionamento entre Cardapio e Produto
