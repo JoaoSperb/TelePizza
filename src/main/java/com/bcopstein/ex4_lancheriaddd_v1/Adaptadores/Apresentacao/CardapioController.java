@@ -17,24 +17,27 @@ import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.RecuperaListaCardapiosUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.RecuperarCardapioUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.CardapioResponse;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Produto;
-
+import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.DefinirCardapioCorrenteUC;
 
 @RestController
 @RequestMapping("/cardapio")
 public class CardapioController {
     private RecuperarCardapioUC recuperaCardapioUC;
     private RecuperaListaCardapiosUC recuperaListaCardapioUC;
+    private DefinirCardapioCorrenteUC definirCardapioCorrenteUC;
 
     public CardapioController(RecuperarCardapioUC recuperaCardapioUC,
-                              RecuperaListaCardapiosUC recuperaListaCardapioUC) {
+                              RecuperaListaCardapiosUC recuperaListaCardapioUC,
+                              DefinirCardapioCorrenteUC definirCardapioCorrenteUC) {
         this.recuperaCardapioUC = recuperaCardapioUC;
         this.recuperaListaCardapioUC = recuperaListaCardapioUC;
+        this.definirCardapioCorrenteUC = definirCardapioCorrenteUC;
     }
 
     @GetMapping("/{id}")
     @CrossOrigin("*")
     public CardapioPresenter recuperaCardapio(@PathVariable(value="id")long id){
-        CardapioResponse cardapioResponse = recuperaCardapioUC.run();
+        CardapioResponse cardapioResponse = recuperaCardapioUC.run(id);
         Set<Long> conjIdSugestoes = new HashSet<>(cardapioResponse.getSugestoesDoChef().stream()
             .map(produto->produto.getId())
             .toList());
@@ -48,8 +51,8 @@ public class CardapioController {
 
     @GetMapping("/corrente")
     @CrossOrigin("*")
-    public CardapioPresenter recuperaCardapioCorrente(){
-        CardapioResponse cardapioResponse = recuperaCardapioUC.run();
+    public CardapioPresenter recuperaCardapioCorrente(@PathVariable(value="id")long id){
+        CardapioResponse cardapioResponse = recuperaCardapioUC.run(id);
         Set<Long> conjIdSugestoes = new HashSet<>(cardapioResponse.getSugestoesDoChef().stream()
             .map(produto->produto.getId())
             .toList());
@@ -64,7 +67,7 @@ public class CardapioController {
     @PutMapping("/corrente/{id}")
     @CrossOrigin("*")
     public void definirCardapioCorrente(@PathVariable(value="id") long id){
-        definirCardapioCorrenteUC.run();
+        definirCardapioCorrenteUC.run(id);
     }
 
     @GetMapping("/lista")
