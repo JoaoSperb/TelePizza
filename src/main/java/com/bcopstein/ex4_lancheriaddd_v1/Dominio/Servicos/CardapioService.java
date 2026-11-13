@@ -16,13 +16,12 @@ public class CardapioService {
     // public static final String CHAVE_CARDAPIO_CORRENTE = "cardapio_corrente";
 
     private CardapioRepository cardapioRepository;
-    private ConfiguracaoRepository configuracaoRepository;
+    // private ConfiguracaoRepository configuracaoRepository;
 
     @Autowired
-    public CardapioService(CardapioRepository cardapioRepository,
-            ConfiguracaoRepository configuracaoRepository) {
+    public CardapioService(CardapioRepository cardapioRepository) {  //configuracao repository tava aqui antes
         this.cardapioRepository = cardapioRepository;
-        this.configuracaoRepository = configuracaoRepository;
+        // this.configuracaoRepository = configuracaoRepository;
     }
 
     public Cardapio recuperaCardapio(long Id) {
