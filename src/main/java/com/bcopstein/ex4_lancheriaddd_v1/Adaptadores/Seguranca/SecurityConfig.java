@@ -3,6 +3,7 @@ package com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Seguranca;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.boot.CommandLineRunner;
 
 @Configuration
 @EnableWebSecurity
@@ -38,25 +38,27 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
-            throws Exception {
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().authenticated()
+                .requestMatchers("/", "/error").permitAll()
+                .requestMatchers(HttpMethod.GET, "/cardapio/lista").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.PUT, "/cardapio/corrente/*").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.GET, "/descontos").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.PUT, "/descontos/corrente/*").hasRole("ADMINISTRADOR")
+                .anyRequest().permitAll()
             )
             .httpBasic(basic -> {});
 
         return http.build();
     }
 
-    @Bean
-    public CommandLineRunner gerarHash(PasswordEncoder passwordEncoder) {
-        return args -> {
-            System.out.println("Hash: " + passwordEncoder.encode("adminpass"));
-        };
-    } // pra testar inicialmente o hash da senha.
-
+    // @Bean
+    // public CommandLineRunner gerarHash(PasswordEncoder passwordEncoder) {
+    //     return args -> {
+    //         System.out.println("Hash: " + passwordEncoder.encode("adminpass"));
+    //     };
+    // } // pra testar inicialmente o hash da senha.
+    // acredito que o hash gerado uma vez ja ira servir para os outros casos.
 }
