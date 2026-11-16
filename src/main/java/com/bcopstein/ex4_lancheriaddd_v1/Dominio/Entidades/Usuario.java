@@ -11,15 +11,19 @@ public class Usuario {
         this.perfil = perfil;
     }
 
-
     public Usuario(String email, String senha){
         this.email = email;
         this.senha = senha;
         this.perfil = PerfilUsuario.CLIENTE;
     }
 
-
     public String getEmail(){return email;}
-    public void setSenha(String nova_senha){this.senha = nova_senha;}
     
+    public PerfilUsuario getPerfil() {return perfil;}
+    
+    public void setSenha(String nova_senha){this.senha = nova_senha;}
+
+    public String getSenha(){return senha;}
+
+    public boolean ehAdministrador() { return perfil == PerfilUsuario.ADMINISTRADOR;}
 }

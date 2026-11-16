@@ -75,7 +75,7 @@ public class CardapioController {
     public List<CabecalhoCardapioPresenter> recuperaListaCardapios(){
          List<CabecalhoCardapioPresenter> lstCardapios = 
             recuperaListaCardapioUC.run().cabecalhos().stream()
-            .map(cabCar -> new CabecalhoCardapioPresenter(cabCar.id(),cabCar.titulo()))
+            .map(cabCar -> new CabecalhoCardapioPresenter(cabCar.id(),cabCar.titulo(),cabCar.corrente()))
             .toList();
          return lstCardapios;
     }
