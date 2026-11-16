@@ -5,22 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Dados.ConfiguracaoRepository;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Dados.PoliticaDescontoRepository;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.PoliticaDesconto;
 
 @Service
 public class DescontoService {
-    public static final String CHAVE_POLITICA_CORRENTE = "politica_desconto_corrente";
 
     private PoliticaDescontoRepository politicaDescontoRepository;
-    private ConfiguracaoRepository configuracaoRepository;
 
     @Autowired
-    public DescontoService(PoliticaDescontoRepository politicaDescontoRepository,
-            ConfiguracaoRepository configuracaoRepository) {
+    public DescontoService(PoliticaDescontoRepository politicaDescontoRepository) {
         this.politicaDescontoRepository = politicaDescontoRepository;
-        this.configuracaoRepository = configuracaoRepository;
     }
 
     public List<PoliticaDesconto> listaPoliticas() {
@@ -29,7 +24,10 @@ public class DescontoService {
 
     public void definirPoliticaCorrente(String codigo) {
         if (!politicaDescontoRepository.existe(codigo))
-            throw new IllegalArgumentException("Politica de desconto inexistente: " + codigo);
-        configuracaoRepository.salva(CHAVE_POLITICA_CORRENTE, codigo);
+            throw new IllegalArgumentException(
+                "Politica de desconto inexistente: " + codigo
+            );
+
+        politicaDescontoRepository.definirCorrente(codigo);
     }
 }

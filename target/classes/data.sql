@@ -60,9 +60,9 @@ INSERT INTO produto_receita (produto_id,receita_id) VALUES(2,2);
 INSERT INTO produto_receita (produto_id,receita_id) VALUES(3,3);
 
 --diferentes politicas de desconto
-INSERT INTO politicas_desconto (codigo, corrente) VALUES ('SEM_DESCONTO', 'Sem desconto', true);
-INSERT INTO politicas_desconto (codigo, corrente) VALUES ('FIDELIDADE', 'Desconto por fidelidade', false);
-INSERT INTO politicas_desconto (codigo, corrente) VALUES ('POR_VOLUME', 'Desconto por volume', false);
+INSERT INTO politicas_desconto (codigo, descricao, corrente) VALUES ('SEM_DESCONTO', 'Sem desconto', true);
+INSERT INTO politicas_desconto (codigo, descricao, corrente) VALUES ('FIDELIDADE', 'Desconto por fidelidade', false);
+INSERT INTO politicas_desconto (codigo, descricao, corrente) VALUES ('POR_VOLUME', 'Desconto por volume', false);
 
 -- Insercao dos cardapios
 INSERT INTO cardapios (id,titulo) VALUES(1,'Cardapio de Agosto');

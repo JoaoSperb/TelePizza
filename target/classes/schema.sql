@@ -59,6 +59,7 @@ create table if not exists produto_receita (
 
 create table if not exists politicas_desconto (
   codigo varchar(50) primary key,
+  descricao varchar(200),
   corrente boolean default false
 );
 
