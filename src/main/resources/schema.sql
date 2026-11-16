@@ -57,6 +57,11 @@ create table if not exists produto_receita (
   foreign key (receita_id) references receitas(id)
 );
 
+create table if not exists politicas_desconto (
+  codigo varchar(50) primary key,
+  corrente boolean default false
+);
+
 -- Tabela de Cardapios
 create table if not exists cardapios (
   id bigint primary key,
