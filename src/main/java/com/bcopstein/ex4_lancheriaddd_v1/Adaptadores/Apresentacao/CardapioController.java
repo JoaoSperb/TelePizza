@@ -1,3 +1,4 @@
+
 package com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Apresentacao;
 
 import java.util.HashSet;
@@ -13,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Apresentacao.Presenters.CabecalhoCardapioPresenter;
 import com.bcopstein.ex4_lancheriaddd_v1.Adaptadores.Apresentacao.Presenters.CardapioPresenter;
+import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.DefinirCardapioCorrenteUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.RecuperaListaCardapiosUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.RecuperarCardapioUC;
 import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.Responses.CardapioResponse;
 import com.bcopstein.ex4_lancheriaddd_v1.Dominio.Entidades.Produto;
-import com.bcopstein.ex4_lancheriaddd_v1.Aplicacao.DefinirCardapioCorrenteUC;
 
 @RestController
 @RequestMapping("/cardapio")
@@ -36,47 +37,57 @@ public class CardapioController {
 
     @GetMapping("/{id}")
     @CrossOrigin("*")
-    public CardapioPresenter recuperaCardapio(@PathVariable(value="id")long id){
+    public CardapioPresenter recuperaCardapio(@PathVariable(value="id") long id) {
         CardapioResponse cardapioResponse = recuperaCardapioUC.run(id);
-        Set<Long> conjIdSugestoes = new HashSet<>(cardapioResponse.getSugestoesDoChef().stream()
-            .map(produto->produto.getId())
-            .toList());
-        CardapioPresenter cardapioPresenter = new CardapioPresenter(cardapioResponse.getCardapio().getCabecalhoCardapio().titulo());
-        for(Produto produto:cardapioResponse.getCardapio().getProdutos()){
-            boolean sugestao = conjIdSugestoes.contains(produto.getId());
-            cardapioPresenter.insereItem(produto.getId(), produto.getDescricao(), produto.getPreco(), sugestao);
-        }
-        return cardapioPresenter;
+        return montaPresenter(cardapioResponse);
     }
 
     @GetMapping("/corrente")
     @CrossOrigin("*")
-    public CardapioPresenter recuperaCardapioCorrente(@PathVariable(value="id")long id){
-        CardapioResponse cardapioResponse = recuperaCardapioUC.run(id);
+    public CardapioPresenter recuperaCardapioCorrente() {
+        CardapioResponse cardapioResponse = recuperaCardapioUC.runCorrente();
+        return montaPresenter(cardapioResponse);
+    }
+
+    private CardapioPresenter montaPresenter(CardapioResponse cardapioResponse) {
         Set<Long> conjIdSugestoes = new HashSet<>(cardapioResponse.getSugestoesDoChef().stream()
-            .map(produto->produto.getId())
+            .map(produto -> produto.getId())
             .toList());
-        CardapioPresenter cardapioPresenter = new CardapioPresenter(cardapioResponse.getCardapio().getCabecalhoCardapio().titulo());
-        for(Produto produto:cardapioResponse.getCardapio().getProdutos()){
+
+        CardapioPresenter cardapioPresenter = new CardapioPresenter(
+            cardapioResponse.getCardapio().getCabecalhoCardapio().titulo());
+
+        for (Produto produto : cardapioResponse.getCardapio().getProdutos()) {
             boolean sugestao = conjIdSugestoes.contains(produto.getId());
-            cardapioPresenter.insereItem(produto.getId(), produto.getDescricao(), produto.getPreco(), sugestao);
+            cardapioPresenter.insereItem(
+                produto.getId(),
+                produto.getDescricao(),
+                produto.getPreco(),
+                sugestao
+            );
         }
+
         return cardapioPresenter;
     }
 
     @PutMapping("/corrente/{id}")
     @CrossOrigin("*")
-    public void definirCardapioCorrente(@PathVariable(value="id") long id){
+    public void definirCardapioCorrente(@PathVariable(value="id") long id) {
         definirCardapioCorrenteUC.run(id);
     }
 
     @GetMapping("/lista")
     @CrossOrigin("*")
-    public List<CabecalhoCardapioPresenter> recuperaListaCardapios(){
-         List<CabecalhoCardapioPresenter> lstCardapios = 
+    public List<CabecalhoCardapioPresenter> recuperaListaCardapios() {
+        List<CabecalhoCardapioPresenter> lstCardapios =
             recuperaListaCardapioUC.run().cabecalhos().stream()
-            .map(cabCar -> new CabecalhoCardapioPresenter(cabCar.id(),cabCar.titulo(),cabCar.corrente()))
-            .toList();
-         return lstCardapios;
+                .map(cabCar -> new CabecalhoCardapioPresenter(
+                    cabCar.id(),
+                    cabCar.titulo(),
+                    cabCar.corrente()
+                ))
+                .toList();
+
+        return lstCardapios;
     }
 }

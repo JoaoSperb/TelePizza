@@ -24,4 +24,15 @@ public class RecuperarCardapioUC {
         List<Produto> sugestoes = cardapioService.recuperaSugestoesDoChef();
         return new CardapioResponse(cardapio, sugestoes);
     }
+
+     // UC5: recupera o cardapio que foi definido como corrente pelo administrador.
+    public CardapioResponse runCorrente() {
+        Cardapio cardapio = cardapioService.recuperaCardapioCorrente();
+        return montarResponse(cardapio);
+    }
+
+    private CardapioResponse montarResponse(Cardapio cardapio) {
+        List<Produto> sugestoes = cardapioService.recuperaSugestoesDoChef();
+        return new CardapioResponse(cardapio, sugestoes);
+    }
 }

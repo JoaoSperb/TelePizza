@@ -65,9 +65,9 @@ INSERT INTO politicas_desconto (codigo, descricao, corrente) VALUES ('SEM_DESCON
 INSERT INTO politicas_desconto (codigo, descricao, corrente) VALUES ('FIDELIDADE', 'Desconto por fidelidade', false);
 INSERT INTO politicas_desconto (codigo, descricao, corrente) VALUES ('POR_VOLUME', 'Desconto por volume', false);
 
--- Insercao dos cardapios
-INSERT INTO cardapios (id,titulo) VALUES(1,'Cardapio de Agosto');
-INSERT INTO cardapios (id,titulo) VALUES(2,'Cardapio de Setembro');
+-- Cardapio inicial corrente para permitir consulta no primeiro boot.
+INSERT INTO cardapios (id,titulo,corrente) VALUES(1,'Cardapio de Agosto',TRUE);
+INSERT INTO cardapios (id,titulo,corrente) VALUES(2,'Cardapio de Setembro',FALSE);
 
 -- Associação dos cardapios com os produtos
 INSERT INTO cardapio_produto (cardapio_id,produto_id) VALUES (1,1);
