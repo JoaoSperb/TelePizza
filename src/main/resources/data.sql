@@ -1,6 +1,7 @@
 -- usuarios para os clientes
 INSERT INTO usuarios (email, senha, perfil) VALUES ('huguinho.pato@email.com', 'HASH_DA_SENHA', 'CLIENTE');
 INSERT INTO usuarios (email, senha, perfil) VALUES ('zezinho.pato@email.com', 'HASH_DA_SENHA', 'CLIENTE');
+INSERT INTO usuarios (email, senha, perfil) VALUES ('tio_patas@telepizza.com', 'adminpass', 'ADMINISTRADOR');
 
 -- Inserção dos clientes
 INSERT INTO clientes(cpf, nome, celular, endereco, usuario_email) VALUES ('9001', 'Huguinho Pato', '51985744566', 'Rua das Flores, 100', 'huguinho.pato@email.com');
