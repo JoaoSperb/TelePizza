@@ -1,6 +1,10 @@
+-- usuarios para os clientes
+INSERT INTO usuarios (email, senha, perfil) VALUES ('huguinho.pato@email.com', 'HASH_DA_SENHA', 'CLIENTE');
+INSERT INTO usuarios (email, senha, perfil) VALUES ('zezinho.pato@email.com', 'HASH_DA_SENHA', 'CLIENTE');
+
 -- Inserção dos clientes
-INSERT INTO clientes (cpf, nome, celular, endereco, email) VALUES ('9001', 'Huguinho Pato', '51985744566', 'Rua das Flores, 100', 'huguinho.pato@email.com');
-INSERT INTO clientes (cpf, nome, celular, endereco, email) VALUES ('9002', 'Luizinho Pato', '5199172079', 'Av. Central, 200', 'zezinho.pato@email.com');
+INSERT INTO clientes(cpf, nome, celular, endereco, usuario_email) VALUES ('9001', 'Huguinho Pato', '51985744566', 'Rua das Flores, 100', 'huguinho.pato@email.com');
+INSERT INTO clientes (cpf, nome, celular, endereco, usuario_email) VALUES ('9002', 'Luizinho Pato', '5199172079', 'Av. Central, 200', 'zezinho.pato@email.com');
 
 -- Inserção dos ingredientes
 INSERT INTO ingredientes (id, descricao) VALUES (1, 'Disco de pizza');
@@ -54,6 +58,11 @@ INSERT INTO produtos (id,descricao,preco) VALUES (3,'Pizza margherita',4000);
 INSERT INTO produto_receita (produto_id,receita_id) VALUES(1,1);
 INSERT INTO produto_receita (produto_id,receita_id) VALUES(2,2);
 INSERT INTO produto_receita (produto_id,receita_id) VALUES(3,3);
+
+--diferentes politicas de desconto
+INSERT INTO politicas_desconto (codigo, descricao, corrente) VALUES ('SEM_DESCONTO', 'Sem desconto', true);
+INSERT INTO politicas_desconto (codigo, descricao, corrente) VALUES ('FIDELIDADE', 'Desconto por fidelidade', false);
+INSERT INTO politicas_desconto (codigo, descricao, corrente) VALUES ('POR_VOLUME', 'Desconto por volume', false);
 
 -- Insercao dos cardapios
 INSERT INTO cardapios (id,titulo) VALUES(1,'Cardapio de Agosto');

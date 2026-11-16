@@ -19,4 +19,5 @@ public class Cliente {
     public String getNome() { return nome; }
     public String getCelular() { return celular; }
     public String getEndereco() { return endereco; }
+    public Usuario getUsuario(){return usuario;}
 }
